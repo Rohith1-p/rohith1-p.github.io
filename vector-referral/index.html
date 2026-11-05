@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Vector Referral Case Study | Rohith Perumandla </title>
+  <meta name="author" content="Rohith Perumandla">
+  <meta name="description"
+    content="Vector Referral — a forward deployed engineering case study: healthcare referral AI from discovery to a live clinical pilot. Deterministic code, AI drafting, human accountability.">
+  <meta name="keywords" content="forward deployed engineer, FDE, healthcare AI, dental referrals, case study, human-in-the-loop, LLM evaluation">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css"
+    integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+  <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5">
+  <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772">
+  <link defer rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap">
+  <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99"
+    media="" id="highlight_theme_light">
+  <link rel="shortcut icon"
+    href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
+  <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e">
+  <link rel="canonical" href="https://rohithperumandla.me/vector-referral/">
+  <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script>
+  <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca"
+    media="none" id="highlight_theme_dark">
+  <script>
+    initTheme();
+  </script>
+  <style>
+    .vr-box {
+      border: 1.5px solid var(--global-divider-color);
+      border-radius: 10px;
+      background: var(--global-card-bg-color);
+      padding: 1.25rem 1.1rem 1rem;
+      height: 100%;
+      position: relative;
+    }
+    .vr-box-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--global-theme-color);
+      text-transform: uppercase;
+    }
+    .vr-box-title { font-weight: 700; font-size: 1.05rem; margin: 0.15rem 0 0.2rem; }
+    .vr-box-sub { font-size: 0.82rem; font-style: italic; color: var(--global-text-color); opacity: 0.75; margin-bottom: 0.9rem; }
+    .vr-step { display: flex; align-items: flex-start; margin-bottom: 0.7rem; }
+    .vr-step-num {
+      flex: 0 0 auto;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--global-theme-color);
+      color: var(--global-bg-color);
+      font-size: 0.78rem; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-right: 0.55rem; margin-top: 0.1rem;
+    }
+    .vr-step-text { font-size: 0.88rem; line-height: 1.45; }
+    .vr-flow-arrow {
+      position: absolute; top: 50%; right: -13px; transform: translateY(-50%);
+      color: var(--global-theme-color); font-size: 1.1rem; font-weight: 700; z-index: 2;
+    }
+    @media (max-width: 767px) { .vr-flow-arrow { display: none; } }
+    .vr-glance {
+      border: 1.5px solid var(--global-divider-color);
+      border-radius: 10px;
+      background: var(--global-card-bg-color);
+      padding: 1rem 1.25rem;
+    }
+    .vr-glance-row { padding: 0.45rem 0; border-bottom: 1px solid var(--global-divider-color); font-size: 0.92rem; }
+    .vr-glance-row:last-child { border-bottom: none; }
+    .vr-glance-key { font-weight: 700; white-space: nowrap; padding-right: 1rem; }
+    .vr-toc { font-size: 0.88rem; }
+    .vr-toc a { color: var(--global-theme-color); text-decoration: none; }
+    .vr-toc a:hover { text-decoration: underline; }
+    .vr-section h2 {
+      font-size: 1.45rem;
+      margin-top: 2.4rem;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--global-divider-color);
+    }
+    .vr-section h2 .vr-secnum { color: var(--global-theme-color); margin-right: 0.45rem; }
+    .vr-section p, .vr-section li { font-size: 0.97rem; line-height: 1.65; }
+    .vr-quote {
+      border-left: 4px solid var(--global-theme-color);
+      padding: 0.65rem 1.1rem;
+      margin: 1.2rem 0;
+      background: var(--global-card-bg-color);
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+    }
+    .vr-fde-table td, .vr-fde-table th { font-size: 0.9rem; padding: 0.55rem 0.75rem; vertical-align: top; border-top: 1px solid var(--global-divider-color); }
+    .vr-fde-table th { border-top: none; }
+  </style>
+</head>
+
+<body class="fixed-top-nav ">
+  <header>
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-brand social">
+          <a href="https://x.com/Rohith1_P" title="Twitter" rel="external nofollow noopener" target="_blank">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/perumandla-rohith/" title="LinkedIn" rel="external nofollow noopener"
+            target="_blank">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+          <a href="https://www.instagram.com/rohith_perumandla/" title="Instagram" rel="external nofollow noopener"
+            target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://github.com/Rohith1-p" title="GitHub" rel="external nofollow noopener" target="_blank">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+
+        <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar top-bar"></span>
+          <span class="icon-bar middle-bar"></span>
+          <span class="icon-bar bottom-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse text-right" id="navbarNav">
+          <ul class="navbar-nav ml-auto flex-nowrap">
+            <li class="nav-item ">
+              <a class="nav-link" href="/">about </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/blog/">blog </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/publications/">publications </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/cv/">cv </a>
+            </li>
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">submenus </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item " href="/books/">bookshelf</a>
+                <div class="dropdown-divider"></div>
+              </div>
+            </li>
+            <li class="nav-item">
+              <button id="search-toggle" title="Search" onclick="openSearchModal()">
+                <span class="nav-link">ctrl k <i class="ti ti-search"></i>
+                </span>
+              </button>
+            </li>
+            <li class="toggle-container">
+              <button id="light-toggle" title="Change theme">
+                <i class="ti ti-sun-moon" id="light-toggle-system"></i>
+                <i class="ti ti-moon-filled" id="light-toggle-dark"></i>
+                <i class="ti ti-sun-filled" id="light-toggle-light"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <progress id="progress" value="0">
+      <div class="progress-container">
+        <span class="progress-bar"></span>
+      </div>
+    </progress>
+  </header>
+
+  <div class="container mt-5" role="main">
+    <div class="post">
+      <header class="post-header">
+        <h1 class="post-title">Vector Referral</h1>
+        <p class="post-description">A forward deployed engineering case study — healthcare referral AI, from discovery
+          to a live clinical pilot in four months</p>
+        <p class="post-description" style="font-size: 0.9rem;">
+          <strong>Role:</strong> Founding AI Engineer (solo) &nbsp;·&nbsp;
+          <strong>Timeline:</strong> Sep 2025 – Apr 2026 &nbsp;·&nbsp;
+          <strong>Domain:</strong> Dental referrals (US) &nbsp;·&nbsp;
+          <strong>Stack:</strong> Python, FastAPI, LLM APIs, Sikka, PostgreSQL, Railway/Vercel
+        </p>
+      </header>
+
+      <article>
+        <div class="vr-quote">
+          When a general dentist refers you to a specialist, the referral goes out — and the report almost never comes
+          back. I built the platform that closes that loop, with an LLM in the middle of it and a human signature on
+          everything it writes.
+        </div>
+
+        <p class="vr-toc" style="margin-bottom: 1.6rem;">
+          <strong>On this page:</strong>
+          <a href="#glance">At a glance</a> ·
+          <a href="#problem">The problem</a> ·
+          <a href="#discovery">Discovery</a> ·
+          <a href="#workflow">The workflow split</a> ·
+          <a href="#build">The build</a> ·
+          <a href="#grounding">Grounding</a> ·
+          <a href="#ontology">Ontologies</a> ·
+          <a href="#evals">Evaluation</a> ·
+          <a href="#pilot">Real people</a> ·
+          <a href="#calls">Judgment calls</a> ·
+          <a href="#outcome">Outcome</a> ·
+          <a href="#fde">Why FDE</a>
+        </p>
+
+        <!-- ============ AT A GLANCE ============ -->
+        <div class="vr-section" id="glance">
+          <h2><span class="vr-secnum">§</span>At a glance</h2>
+          <div class="vr-glance">
+            <div class="row vr-glance-row">
+              <div class="col-3 vr-glance-key">Problem</div>
+              <div class="col-9">Referral reports, X-rays, and treatment status never flow back to referring dentists
+                — the care loop is broken.</div>
+            </div>
+            <div class="row vr-glance-row">
+              <div class="col-3 vr-glance-key">Approach</div>
+              <div class="col-9">Embedded with real offices first; split the workflow into deterministic code, AI
+                drafting, and human sign-off.</div>
+            </div>
+            <div class="row vr-glance-row">
+              <div class="col-3 vr-glance-key">Key techniques</div>
+              <div class="col-9">Per-office schema mapping (an ontology layer), few-shot grounding, abstention design,
+                RAGAS-style eval harness.</div>
+            </div>
+            <div class="row vr-glance-row">
+              <div class="col-3 vr-glance-key">Outcome</div>
+              <div class="col-9">Live pilot with real offices; reports reliable enough for a physician's signature; an
+                incumbent in the dental space tested the product and expressed acquisition interest.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 1. PROBLEM ============ -->
+        <div class="vr-section" id="problem">
+          <h2><span class="vr-secnum">1</span>The actual problem</h2>
+          <p>In dental care, the referral workflow looks like this: a general dentist sends a patient to an
+            endodontist, an oral surgeon, an orthodontist. The referral itself is the easy part. What happens next is
+            the broken part:</p>
+          <ul>
+            <li>The specialist's findings, X-rays, and treatment reports <strong>rarely make it back</strong> to the
+              referring dentist — or arrive weeks later, by fax, after the patient has already returned.</li>
+            <li>The referring office finds out what happened by <strong>calling the specialist's office and asking</strong>.
+              Every referral means phone tag between front desks.</li>
+            <li>The patient falls through the cracks when nobody calls: <strong>the loop of care silently breaks.</strong></li>
+          </ul>
+          <p>Everyone in the industry knows this. Nobody had fixed it, because the workflow runs across
+            <strong>independent businesses</strong> — each with its own practice management system (PMS), its own
+            report template, and no incentive to change tools for someone else's convenience.</p>
+          <p>This is not a modeling problem. It's a <strong>workflow problem that AI can help with</strong> — which is
+            exactly why it interested me.</p>
+        </div>
+
+        <!-- ============ 2. DISCOVERY ============ -->
+        <div class="vr-section" id="discovery">
+          <h2><span class="vr-secnum">2</span>How a forward deployed engineer approaches it</h2>
+          <p>I didn't start with code. I started where the work actually happens.</p>
+          <p><strong>Phase 0 — Discovery.</strong> I sat with the people in the workflow — dentists, specialists,
+            front-desk staff — and had them walk me through the last referral they handled, step by step. Not "what do
+            you usually do," but <em>that specific one</em>: where did the report get stuck, who called whom, what did
+            you copy by hand. That's where the real workflow lives, not in any job description.</p>
+          <p><strong>What the walkthroughs gave me:</strong></p>
+          <ul>
+            <li>The <strong>referral itself is not the pain</strong> — tracking the <em>response</em> is.</li>
+            <li>Specialists don't write reports back because <strong>nobody has time</strong> — not because they're
+              stubborn. Any fix that adds work for the specialist is dead on arrival.</li>
+            <li>Every office has a <strong>different report template</strong>. "Just standardize the form" was never
+              going to happen.</li>
+            <li>The workflow spans organizations that <strong>will never share a system</strong> — so the platform has
+              to be the connective tissue, not another walled garden.</li>
+          </ul>
+          <p>This is the FDE instinct: <strong>understand how the business actually operates before building
+            anything.</strong> The product design fell out of the discovery almost mechanically.</p>
+        </div>
+
+        <!-- ============ 3. WORKFLOW SPLIT ============ -->
+        <div class="vr-section" id="workflow">
+          <h2><span class="vr-secnum">3</span>Dividing the workflow: deterministic, AI, human</h2>
+          <p>The core design decision was <em>where each kind of work belongs</em>. I mapped every step of the referral
+            lifecycle and sorted it into three kinds of work. Follow the numbers — one referral, seven steps, flowing
+            left to right:</p>
+
+          <div class="row mt-4" style="row-gap: 1rem;">
+            <div class="col-md-4">
+              <div class="vr-box">
+                <div class="vr-box-tag">Steps 1–4</div>
+                <div class="vr-box-title">▣ Deterministic code</div>
+                <div class="vr-box-sub">Must be exact, idempotent, and auditable — every single time. No probability
+                  allowed.</div>
+                <div class="vr-step"><span class="vr-step-num">1</span><span class="vr-step-text">Poll each office's PMS every 5–10 min for changed records (change-window filter, idempotent).</span></div>
+                <div class="vr-step"><span class="vr-step-num">2</span><span class="vr-step-text">Retrieve new documents — X-rays, clinical notes — and attach them to the referral record.</span></div>
+                <div class="vr-step"><span class="vr-step-num">3</span><span class="vr-step-text">Advance the referral state machine: sent → booked → visited → report due → signed → returned.</span></div>
+                <div class="vr-step"><span class="vr-step-num">4</span><span class="vr-step-text">Deliver the signed report and every status event back to the referring office, documents attached.</span></div>
+                <span class="vr-flow-arrow">→</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="vr-box">
+                <div class="vr-box-tag">Steps 5–6</div>
+                <div class="vr-box-title">▣ AI drafting</div>
+                <div class="vr-box-sub">Genuinely unstructured work — the part a human used to do by reading and
+                  typing. The LLM is a draftsman only.</div>
+                <div class="vr-step"><span class="vr-step-num">5</span><span class="vr-step-text">Read the extracted records and map every field into this office's own template (per-office schema mapping).</span></div>
+                <div class="vr-step"><span class="vr-step-num">6</span><span class="vr-step-text">Draft the referral report strictly from source documents — grounded in golden examples; any field with no source is flagged blank, never inferred.</span></div>
+                <span class="vr-flow-arrow">→</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="vr-box">
+                <div class="vr-box-tag">Step 7</div>
+                <div class="vr-box-title">▣ Human accountability</div>
+                <div class="vr-box-sub">In healthcare, a confident wrong report is worse than a late one.</div>
+                <div class="vr-step"><span class="vr-step-num">7</span><span class="vr-step-text">The specialist verifies, corrects, and digitally signs. <strong>Nothing AI-generated is ever sent to a referring office without a signature.</strong></span></div>
+              </div>
+            </div>
+          </div>
+
+          <p style="margin-top: 1.3rem;">Step 7 is the one I'd defend hardest: <strong>the AI never sends
+            anything.</strong> The failure mode I designed against was a plausible-looking fabricated field inside a
+            clinical document. The human-in-the-loop gate isn't a limitation of the AI — it's the design that made
+            real clinicians willing to touch it at all.</p>
+        </div>
+
+        <!-- ============ 4. BUILD ============ -->
+        <div class="vr-section" id="build">
+          <h2><span class="vr-secnum">4</span>The build, in phases</h2>
+          <p><strong>Phase 1 — Close the loop dumbly (weeks 1–6).</strong><br>
+            Before any AI: a referral portal where the loop itself closes — booking, visit, treatment-complete events
+            flow back to the referring office automatically, documents attached. Deterministic only. Offices got value
+            on day one, and I got a live workflow to learn from. I rejected bolting onto fax/email — those channels
+            can't carry structured events.</p>
+          <p><strong>Phase 2 — Put the LLM in the middle (weeks ~6–12).</strong><br>
+            Specialists had no time to write reports — the loop died at the report. So: integrate with each office's
+            existing PMS (never ask an office to change tools), poll for changes every 5–10 minutes, extract new
+            documents, and have an LLM <strong>draft</strong> the report from the source records. Specialist corrects
+            and signs. Reports that never got written now flow — with a human accountable for every one.</p>
+          <p><strong>Phase 3 — Earn the signature (weeks ~12–16).</strong><br>
+            The first drafts weren't good enough for a clinician's signature — this phase was about making them
+            trustworthy. Grounding, schema mapping, abstention, and an eval harness (next two sections). This is where
+            the product went from demo to something a physician would put their name on.</p>
+        </div>
+
+        <!-- ============ 5. GROUNDING ============ -->
+        <div class="vr-section" id="grounding">
+          <h2><span class="vr-secnum">5</span>Teaching the AI not to guess</h2>
+          <p>The naive drafts had real failure modes, and naming them precisely was half the fix:</p>
+          <ul>
+            <li><strong>Hallucinated values</strong> — plausible clinical details that appeared in no record.</li>
+            <li><strong>Transposed fields</strong> — similar field names on different template slots, swapped.</li>
+            <li><strong>Schema variance</strong> — every office's template meant the same concept had a different name
+              and shape.</li>
+          </ul>
+          <p>The fixes, in layers:</p>
+          <ol>
+            <li><strong>Few-shot grounding</strong> — 10–15 golden example reports per template, so the model drafts
+              in the office's own voice and format.</li>
+            <li><strong>Explicit field definitions</strong> — every field defined in the prompt; nothing left to
+              interpretation.</li>
+            <li><strong>Per-office schema mapping</strong> — each office's template mapped explicitly to the
+              platform's canonical referral model (this became the ontology layer — next section).</li>
+            <li><strong>Abstention</strong> — the rule that mattered most: <strong>no source data → the field is
+              flagged blank, never inferred.</strong> The AI is allowed to say "not found." A blank a human fills in
+              is a workflow; a fabricated value in a clinical report is a liability.</li>
+          </ol>
+          <p>The principle underneath all four: <strong>the model never gets to invent the ontology.</strong> It works
+            with the nouns and verbs the customer actually uses, or it declines.</p>
+        </div>
+
+        <!-- ============ 6. ONTOLOGY ============ -->
+        <div class="vr-section" id="ontology">
+          <h2><span class="vr-secnum">6</span>Abstraction &amp; ontologies: one platform, every office's vocabulary</h2>
+          <p>The hardest engineering problem wasn't the LLM — it was <strong>variance across customers</strong>. Every
+            office had its own template, its own field names, its own implicit model of a referral. Naively, that's an
+            N-way special-case explosion.</p>
+          <p>What I built instead was a thin <strong>ontology layer</strong>: a canonical model of the referral domain
+            (Patient, Referral, Specialist, Report, Procedure, Status, timestamps) with each office's schema mapped
+            onto it. Onboarding a new office = writing their mapping, not rewriting the pipeline.</p>
+          <p>In forward-deployed terms: <strong>their nouns (entities and fields) and their verbs (workflow events)
+            made explicit.</strong> The LLM grounds against the mapping; the deterministic state machine consumes it;
+            the eval harness validates it.</p>
+          <p>I've since gone deep on this formally — RDF/OWL, SHACL validation, SPARQL — building a proper
+            referral-domain ontology as a capstone, because this pattern (a customer-specific ontology is the
+            difference between a generic model and a deployed one) is exactly where enterprise AI lives or dies.</p>
+        </div>
+
+        <!-- ============ 7. EVALS ============ -->
+        <div class="vr-section" id="evals">
+          <h2><span class="vr-secnum">7</span>Evaluation: no iteration without a gate</h2>
+          <p>"It seems better" is not a deployment criterion. I built an <strong>offline eval harness</strong> before
+            tuning anything:</p>
+          <ul>
+            <li><strong>Golden set:</strong> 30–50 real (de-identified) documents from pilot offices.</li>
+            <li><strong>Metrics:</strong> faithfulness of drafts to source records, context precision/recall per field
+              (RAGAS-style), plus abstention correctness — did it flag what it should have flagged?</li>
+            <li><strong>The rule:</strong> every prompt change, new guardrail, or model swap ran the full harness
+              first. <strong>No iteration shipped without passing its gate.</strong></li>
+          </ul>
+          <p>This changed the character of development: hallucination fixes went from vibes to measurable deltas, and
+            "good enough for a signature" became a threshold I could watch the system cross.</p>
+        </div>
+
+        <!-- ============ 8. PILOT ============ -->
+        <div class="vr-section" id="pilot">
+          <h2><span class="vr-secnum">8</span>Testing with real people</h2>
+          <p>The pilot ran with <strong>real offices</strong> — not staging environments, not friendly demos:</p>
+          <ul>
+            <li>Real referrals flowed, real reports got drafted, real specialists signed (or rejected and corrected)
+              them.</li>
+            <li>Every correction by a specialist was a <strong>labeled example</strong> feeding back into golden sets
+              and few-shot libraries — human feedback as a training signal.</li>
+            <li>I watched adoption honestly: the signature gate was the hinge. Specialists wouldn't touch an
+              autonomous sender; they would absolutely review-and-sign a good draft, because it saved them the
+              writing.</li>
+            <li><strong>Result the offices felt:</strong> referring offices got status without phone calls — the loop
+              the whole referral market had accepted as broken. Specialist reports came back roughly 40% faster across
+              pilot offices — meaning treatment started earlier.</li>
+          </ul>
+        </div>
+
+        <!-- ============ 9. JUDGMENT CALLS ============ -->
+        <div class="vr-section" id="calls">
+          <h2><span class="vr-secnum">9</span>Engineering judgment calls worth naming</h2>
+          <p><strong>Polling, not webhooks.</strong> The PMS ecosystem is legacy and on-prem; I integrated through
+            Sikka (one API over 400+ PMS products). The non-obvious finding: even Sikka's webhooks only fire after
+            their on-prem agent extracts data <em>on its own schedule</em> — so webhooks would have bought zero
+            freshness. I chose polling with change-window filters (only records modified since last run), idempotent,
+            every 5–10 minutes. Cost: ≤1 interval of latency — clinically irrelevant for referrals. Simplicity won
+            because I understood where the freshness ceiling actually sat: <strong>upstream of either option.</strong></p>
+          <p><strong>Observability on a solo pilot.</strong> No ops team — so the system watched itself: referral
+            success rates, error dashboards, drill-down to root cause, email alerts. I knew when it broke before the
+            offices did. On a pilot, <strong>trust is the renewal</strong>; silent failures kill it.</p>
+          <p><strong>HIPAA as design, not paperwork.</strong> BAAs with every vendor touching PHI;
+            <strong>pseudonymized</strong> IDs in transit with identity mapping living only inside the platform;
+            minimum-necessary content in patient SMS (status + portal link, never treatment details); scoped access
+            per referral.</p>
+        </div>
+
+        <!-- ============ 10. OUTCOME ============ -->
+        <div class="vr-section" id="outcome">
+          <h2><span class="vr-secnum">10</span>Outcome</h2>
+          <ul>
+            <li><strong>Live pilot with real offices</strong>, full loop closure: referral → booking → visit →
+              AI-drafted, specialist-signed report → back to the referring dentist, automatically.</li>
+            <li>Reports trustworthy enough that clinicians <strong>put their signatures on them</strong> — the
+              adoption bar that matters in healthcare.</li>
+            <li>The product validated well enough that an <strong>incumbent in the dental space tested it and
+              expressed acquisition interest</strong> (interest, not an offer — the evaluation was paused at that
+              stage).</li>
+            <li>Built end-to-end by one engineer in ~4 months: discovery, platform, integrations, AI layer, evals,
+              compliance, observability.</li>
+          </ul>
+        </div>
+
+        <!-- ============ 11. WHY FDE ============ -->
+        <div class="vr-section" id="fde">
+          <h2><span class="vr-secnum">11</span>Why this is a forward deployed engineer's story</h2>
+          <p>Everything above is the FDE loop, lived end to end:</p>
+          <table class="vr-fde-table">
+            <thead>
+              <tr><th style="width: 34%;">FDE competency</th><th>How this project exercised it</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Embedded discovery</strong></td><td>Workflow walkthroughs in real offices before writing code; requirements extracted from behavior, not surveys.</td></tr>
+              <tr><td><strong>Workflow decomposition</strong></td><td>Explicit deterministic / AI / human split with named rationale for each boundary.</td></tr>
+              <tr><td><strong>Customer-specific ontology</strong></td><td>Per-office schema mapping as a first-class layer; the customer's nouns and verbs made explicit.</td></tr>
+              <tr><td><strong>Safety-first AI design</strong></td><td>Abstention, grounding, and a hard human signature gate — safe-by-default actuation.</td></tr>
+              <tr><td><strong>Evaluation discipline</strong></td><td>Offline golden-set harness gating every change; metrics before vibes.</td></tr>
+              <tr><td><strong>Engineering judgment under constraints</strong></td><td>Polling-vs-webhooks, observability on a solo budget, HIPAA across third parties.</td></tr>
+              <tr><td><strong>Owning it solo, in production</strong></td><td>One person, real offices, real clinical accountability, start to finish.</td></tr>
+            </tbody>
+          </table>
+          <div class="vr-quote" style="margin-top: 1.6rem;">
+            The part I'd keep from this for any deployment: <strong>the model is the easy part.</strong> The work is
+            understanding the workflow, drawing the boundaries between code and judgment, and earning the trust of
+            the people whose names go on the output.
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </div>
+
+  <footer class="fixed-bottom" role="contentinfo">
+    <div class="container mt-0"> © Copyright 2025-2026 Rohith Perumandla </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js"
+    integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+  <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script>
+  <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script>
+  <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script>
+  <script>
+    addBackToTop();
+  </script>
+</body>
+
+</html>
