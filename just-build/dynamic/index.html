@@ -52,6 +52,21 @@ main{position:relative;z-index:1}
   var(--bg);opacity:.85}
 .grain{position:fixed;inset:0;background:url('../assets/grain.png') repeat;background-size:180px 180px;opacity:.22;mix-blend-mode:multiply;z-index:2;pointer-events:none}
 
+/* lofi work scene (person at desktop, animated window rain) */
+.hero-bg{position:absolute;inset:0;overflow:clip;pointer-events:none}
+.scene{position:absolute;right:6px;top:138px;width:min(46vw,600px);opacity:.78;
+  -webkit-mask-image:linear-gradient(90deg,transparent 4%,#000 55%),linear-gradient(#000 62%,transparent 92%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 4%,#000 55%),linear-gradient(#000 62%,transparent 92%);
+  mask-composite:intersect}
+.scene .rd{animation:rainfall 1.5s linear infinite}
+@keyframes rainfall{from{transform:translateY(-14px)}to{transform:translateY(30px)}}
+
+/* freelancer illustration (right side, like the hub's rain city) */
+.hero-bg{position:absolute;inset:0;overflow:clip;pointer-events:none}
+.freelancer{position:absolute;right:-16px;top:118px;width:min(42vw,520px);opacity:.95;filter:blur(2px)}
+/* Illustration: vecteezy_10867137 (free license, attribution: Vecteezy) */
+
 /* ============ header ============ */
 .hd{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 var(--gx);
   transition:height .3s ease,background-color .3s ease,box-shadow .3s ease,border-color .3s ease;border-bottom:1px solid transparent}
@@ -294,6 +309,7 @@ main{position:relative;z-index:1}
 <main>
   <!-- ============ hero + island demo ============ -->
   <section class="hero">
+    <div class="hero-bg"><img class="freelancer" src="../assets/freelancer.png" alt="Illustration of a builder working at his desk"></div>
     <h1 class="rv">The island your Mac was missing.</h1>
     <p class="sub rv" style="--i:1">dynamic turns the notch into a live island. Music, volume, and quick info, right where nothing else fits.</p>
     <div class="ctas rv" style="--i:2">
