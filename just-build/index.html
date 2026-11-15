@@ -48,6 +48,13 @@ main{position:relative;z-index:1}
   radial-gradient(55% 50% at 0% 30%,var(--g2),transparent 75%),
   radial-gradient(40% 35% at 100% 55%,rgba(167,139,250,.35),transparent 70%),
   var(--bg);opacity:.85}
+.hero-bg{position:absolute;inset:0;overflow:clip;pointer-events:none}
+.city{position:absolute;right:0;top:-48px;width:min(80vw,1140px);aspect-ratio:16/9;object-fit:cover;opacity:.32;mix-blend-mode:screen;
+  -webkit-mask-image:linear-gradient(90deg,transparent 2%,#000 42%),linear-gradient(#000 72%,transparent 97%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 2%,#000 42%),linear-gradient(#000 72%,transparent 97%);
+  mask-composite:intersect}
+video.city{background:transparent}
 .grain{position:fixed;inset:0;background:url('assets/grain.png') repeat;background-size:180px 180px;opacity:.4;mix-blend-mode:overlay;z-index:2;pointer-events:none}
 
 /* ============ header ============ */
@@ -227,6 +234,7 @@ main{position:relative;z-index:1}
   .mtrack{animation:none;flex-wrap:wrap;justify-content:center;width:auto}
   .mrow{overflow:visible;-webkit-mask-image:none;mask-image:none}
   .brand span{animation:none}
+  .city{display:none}
   @keyframes fade{from{opacity:0}to{opacity:1}}
 }
 </style>
@@ -254,6 +262,7 @@ main{position:relative;z-index:1}
 <main>
   <!-- ============ hero ============ -->
   <section class="hero">
+    <div class="hero-bg"><img class="city city-fallback" src="assets/clean-bg.jpg" alt=""><video class="city" muted loop playsinline autoplay preload="auto" poster="assets/clean-bg.jpg"><source src="assets/clean-bg.mp4" type="video/mp4"></video></div>
     <p class="va-wm rv" style="--i:0">Just Build</p>
     <h1 class="rv" style="--i:1">Delightful apps and AI systems, built end to end.<br><span class="dim">An independent builder from Chicago, since 2022.</span></h1>
 
@@ -409,6 +418,9 @@ document.querySelectorAll('.rv').forEach((el) => io.observe(el));
 // frosted header once scrolled
 const hd = document.querySelector('.hd');
 addEventListener('scroll', () => hd.classList.toggle('scrolled', scrollY > 24), { passive: true });
+
+// lofi rain city: force load + play, tolerate autoplay refusal
+document.querySelectorAll('video.city').forEach((v) => { v.load(); const p = v.play(); if (p) p.catch(() => {}); });
 </script>
 </body>
 </html>
