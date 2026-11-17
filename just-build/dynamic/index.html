@@ -99,12 +99,8 @@ main{position:relative;z-index:1}
 .menubar{position:absolute;top:0;left:0;right:0;height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px;color:var(--ink3)}
 .menubar .r{display:flex;gap:14px;align-items:center}
 .island{position:absolute;top:0;left:50%;translate:-50% 0;width:210px;height:34px;cursor:pointer;overflow:hidden;
+  background:#000;border-radius:0 0 26px 26px;
   transition:width .55s var(--ease-drawer) .05s,height .55s var(--ease-drawer) .05s}
-.island .neck{position:absolute;top:0;left:50%;transform:translateX(-50%);width:210px;height:18px;background:#000}
-.island .body{position:absolute;top:16px;left:0;right:0;bottom:0;background:#000;border-radius:0 0 26px 26px}
-.island .shL,.island .shR{position:absolute;top:16px;width:var(--sh,0px);height:calc(var(--sh,0px) * 0.3 + 2px);pointer-events:none;opacity:0;transition:opacity .3s ease .12s}
-.island .shL{left:0;background:radial-gradient(ellipse calc(var(--sh,0px) + 1px) calc(var(--sh,0px) * 0.3 + 1px) at 0 0,#000 0 99%,transparent 100%)}
-.island .shR{right:0;background:radial-gradient(ellipse calc(var(--sh,0px) + 1px) calc(var(--sh,0px) * 0.3 + 1px) at 100% 0,#000 0 99%,transparent 100%)}
 .island .idle{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:center;gap:8px;
   transition:opacity 120ms ease}
 .island .idle .eq{display:flex;align-items:flex-end;gap:2px;height:12px}
@@ -113,41 +109,80 @@ main{position:relative;z-index:1}
 .island .idle .eq i:nth-child(2){height:11px;animation-delay:.15s}
 .island .idle .eq i:nth-child(3){height:8px;animation-delay:.3s}
 .island .card{position:absolute;inset:0;opacity:0;pointer-events:none;color:#fff}
-.island .pane{position:absolute;inset:30px 22px 16px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transform:translateY(4px);transition:opacity .25s ease,transform .25s var(--ease-out)}
+.island .pane{position:absolute;inset:32px 22px 16px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transform:translateY(4px);transition:opacity .25s ease,transform .25s var(--ease-out)}
 .island .pane.act{opacity:1;transform:none}
 .island .pane .mid{margin:auto;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .island .mid svg{width:26px;height:26px}
-.island .segs{display:flex;align-items:flex-end;gap:3px;height:26px}
-.island .segs i{width:8px;height:100%;border-radius:3px;background:rgba(255,255,255,.16)}
-.island .segs i.on{background:var(--accent)}
-.island .wx-t{font-size:34px;font-weight:300;letter-spacing:-.02em;line-height:1}
-.island .sub-l{font-size:12px;color:rgba(255,255,255,.6)}
-.island .batbar{width:150px;height:6px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
-.island .batbar i{display:block;height:100%;width:84%;border-radius:99px;background:#4ade80}
+.island .ai{display:flex;flex-direction:column;height:100%;text-align:left}
+.island .ai-head{display:flex;align-items:center;gap:7px}
+.island .ai-logo{width:18px;height:18px;border-radius:5px;flex:none}
+.island .ai-title{font-size:11px;font-weight:700;letter-spacing:.05em;color:#e78a5e;text-transform:uppercase}
+.island .ai-live{display:inline-flex;align-items:center;gap:4px;height:15px;padding:0 7px;border-radius:99px;background:rgba(52,199,89,.16);color:#34c759;font-size:9px;font-weight:600;margin-left:auto}
+.island .ai-live i{width:4px;height:4px;border-radius:50%;background:#34c759}
+.island .ai-upd{font-size:9px;color:rgba(255,255,255,.4)}
+.island .ai-sec{margin:7px 0 1px;font-size:8.5px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.35);text-transform:uppercase}
+.island .ai-row{display:flex;align-items:center;gap:8px;padding:3px 0}
+.island .ai-ic{width:22px;height:22px;border-radius:6px;flex:none}
+.island .ai-m{flex:1;min-width:0}
+.island .ai-n{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden}
+.island .ai-n .nm{overflow:hidden;text-overflow:ellipsis}
+.island .badge{display:inline-flex;align-items:center;gap:3px;height:13px;padding:0 6px;border-radius:99px;font-size:8.5px;font-weight:600;flex:none}
+.island .badge i{width:3.5px;height:3.5px;border-radius:50%}
+.island .badge.run{background:rgba(52,199,89,.15);color:#34c759}
+.island .badge.run i{background:#34c759}
+.island .badge.done{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.island .badge.done i{background:rgba(255,255,255,.6)}
+.island .badge.mdl{background:rgba(99,102,241,.18);color:#a5b4fc}
+.island .ai-r{flex:none;text-align:right}
+.island .ai-time{font-size:11px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;line-height:1.2}
+.island .ai-tok{font-size:8.5px;color:rgba(255,255,255,.4);line-height:1.3}
+.island .shelf-tag{position:absolute;top:-16px;left:0;font-size:12px;font-weight:500;color:rgba(255,255,255,.9)}
+.island .shelf-ic{width:36px;height:36px;color:rgba(255,255,255,.5)}
+.island .shelf-empty{font-size:13px;color:rgba(255,255,255,.8)}
+.island .shelf-empty b{font-weight:600;color:#fff}
+.island .cal{display:flex;gap:16px;height:100%;text-align:left}
+.island .cal-left{width:172px;flex:none}
+.island .cal-head{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:600;color:#fff;margin-bottom:5px}
+.island .cal-nav{color:rgba(255,255,255,.4);font-size:11px;letter-spacing:2px}
+.island .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:1px;text-align:center}
+.island .cal-grid i{font-style:normal;font-size:8px;font-weight:500;color:rgba(255,255,255,.35);line-height:12px}
+.island .cal-grid b{font-weight:400;font-size:9.5px;color:rgba(255,255,255,.75);line-height:13px}
+.island .cal-grid em{font-style:normal;font-size:9.5px;color:rgba(255,255,255,.18);line-height:13px}
+.island .cal-grid b.today{position:relative;color:#fff;font-weight:500}
+.island .cal-grid b.today::after{content:"";position:absolute;inset:1px 5px;border:1px solid rgba(255,255,255,.45);border-radius:50%}
+.island .cal-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.island .cal-day{font-size:11px;font-weight:600;color:#fff}
+.island .ev{display:flex;align-items:center;gap:7px;min-width:0}
+.island .dot-g{width:5px;height:5px;border-radius:50%;background:#30d158;flex:none}
+.island .ev-m{flex:1;min-width:0}
+.island .ev-t{font-size:9px;color:rgba(255,255,255,.45);line-height:1.25}
+.island .ev-n{font-size:10.5px;color:rgba(255,255,255,.9);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.island .join{flex:none;display:inline-flex;align-items:center;gap:3px;height:17px;padding:0 8px;border-radius:99px;background:#22c55e;color:#fff;font-size:9px;font-weight:600}
+.island .join svg{width:9px;height:9px}
 .island .row1{display:flex;align-items:center;gap:12px}
 .island .art{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#3d2f1a,#171411);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 1px var(--line)}
 .island .art svg{width:22px;height:22px}
 .island .meta{min-width:0;text-align:left}
-.island .meta .t{font-size:14.5px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.island .meta .a{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px}
+.island .meta .t{font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.island .meta .a{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:3px}
 .island .row1 .eq{margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:16px}
-.island .row1 .eq i{width:2.5px;background:var(--accent);border-radius:1px;animation:eq 1s ease-in-out infinite alternate}
+.island .row1 .eq i{width:2.5px;background:rgba(255,255,255,.92);border-radius:1px;animation:eq 1s ease-in-out infinite alternate}
 .island .row1 .eq i:nth-child(1){height:8px;animation-delay:0s}
 .island .row1 .eq i:nth-child(2){height:15px;animation-delay:.15s}
 .island .row1 .eq i:nth-child(3){height:11px;animation-delay:.3s}
 .island .row1 .eq i:nth-child(4){height:6px;animation-delay:.45s}
-.island .prog{display:flex;align-items:center;gap:10px;font-size:10.5px;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
-.island .bar{flex:1;height:4px;border-radius:99px;background:rgba(250,248,245,.14);overflow:hidden}
-.island .bar i{display:block;height:100%;width:42%;border-radius:99px;background:var(--accent)}
-.island .row3{display:flex;align-items:center;justify-content:center;gap:18px;position:relative}
-.island .hp{position:absolute;right:0;color:rgba(255,255,255,.7)}
+.island .prog{display:flex;align-items:center;gap:10px;font-size:11px;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+.island .prog span:first-child{color:rgba(255,255,255,.95)}
+.island .bar{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.island .bar i{display:block;height:100%;width:15%;border-radius:99px;background:#fff}
+.island .row3{display:flex;align-items:center;justify-content:center;gap:14px;position:relative}
+.island .hp{position:absolute;right:0;color:rgba(255,255,255,.9)}
 .island .hp svg{width:16px;height:16px}
-.island .ctl{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85)}
+.island .ctl{display:flex;align-items:center;justify-content:center;width:36px;height:28px;border-radius:9px;background:rgba(255,255,255,.08);color:#fff}
 .island .ctl svg{width:18px;height:18px}
-.island .ctl.play{width:30px;height:24px;border-radius:8px;background:rgba(250,248,245,.1)}
+.island .ctl.play{width:44px;height:30px;border-radius:10px;background:rgba(255,255,255,.12)}
 /* expand: shape leads (delay .05s), shoulders bloom, content follows */
-.stage:hover .island,.stage.on .island{--sh:125px;width:460px;height:170px;box-shadow:0 30px 60px rgba(11,21,38,.35)}
-.stage:hover .island .shL,.stage.on .island .shL,.stage:hover .island .shR,.stage.on .island .shR{opacity:1}
+.stage:hover .island,.stage.on .island{width:460px;height:170px;box-shadow:0 30px 60px rgba(11,21,38,.35)}
 .stage:hover .island .idle,.stage.on .island .idle{opacity:0;transition:opacity 100ms ease}
 .stage:hover .island .card,.stage.on .island .card{opacity:1;pointer-events:auto;transition:opacity .25s ease .18s}
 /* activity dots */
@@ -268,7 +303,7 @@ main{position:relative;z-index:1}
   .nav{display:none}
   .feat-grid{grid-template-columns:1fr}
   .stage{height:250px}
-  .stage:hover .island,.stage.on .island{--sh:65px;width:min(92vw,340px);height:190px}
+  .stage:hover .island,.stage.on .island{width:min(92vw,340px);height:190px}
   .stage:hover,.stage.on{--db:204px}
   .island .art{width:40px;height:40px}
   .ft-grid{grid-template-columns:1fr 1fr}
@@ -281,7 +316,7 @@ main{position:relative;z-index:1}
   .mtrack{animation:none;flex-wrap:wrap;justify-content:center;width:auto}
   .mrow{overflow:visible;-webkit-mask-image:none;mask-image:none}
   .brand b{animation:none}
-  .island,.island .card,.island .pane,.island .shL,.island .shR,.dots{transition:none!important}
+  .island,.island .card,.island .pane,.dots{transition:none!important}
   .island .eq i{animation:none}
   @keyframes fade{from{opacity:0}to{opacity:1}}
 }
@@ -324,10 +359,6 @@ main{position:relative;z-index:1}
         <span class="r"><span>100%</span><span>Wi&nbsp;Fi</span><span>Wed 10:24</span></span>
       </div>
       <div class="island" id="island">
-        <div class="neck"></div>
-        <div class="body"></div>
-        <div class="shL"></div>
-        <div class="shR"></div>
         <div class="idle">
           <div class="eq"><i></i><i></i><i></i></div>
         </div>
@@ -342,46 +373,79 @@ main{position:relative;z-index:1}
               <div class="eq"><i></i><i></i><i></i><i></i></div>
             </div>
             <div class="prog">
-              <span>1:42</span>
+              <span>0:24</span>
               <div class="bar"><i></i></div>
-              <span>-2:16</span>
+              <span>-2:17</span>
             </div>
             <div class="row3">
-              <span class="ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.5v14H6zM15.5 5H18v14h-2.5z"/></svg></span>
-              <span class="ctl play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
-              <span class="ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 5H18v14h-2.5zM6 5h2.5v14H6z"/></svg></span>
+              <span class="ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 5H9v14H6.5zM19 5v14L9.5 12 19 5Z"/></svg></span>
+              <span class="ctl play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"/></svg></span>
+              <span class="ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 5h2.5v14H15zM5 5l9.5 7L5 19V5Z"/></svg></span>
               <span class="hp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/></svg></span>
             </div>
           </div>
-          <div class="pane" data-pane="vol">
+          <div class="pane" data-pane="shelf">
+            <div class="shelf-tag">Shelf</div>
             <div class="mid">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12"/></svg>
-              <div class="segs"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
-              <div class="sub-l">Volume · 72%</div>
+              <svg class="shelf-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+              <div class="shelf-empty"><b>Shelf is empty</b> — drag files here</div>
             </div>
           </div>
-          <div class="pane" data-pane="wx">
-            <div class="mid">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6 1.6A4 4 0 0 0 7 19z"/><circle cx="8" cy="4.5" r="0" fill="#fbbf24"/><path d="M12 2v2M4.9 4.9l1.4 1.4M2 12h2" stroke="#fbbf24"/></svg>
-              <div class="wx-t">72°</div>
-              <div class="sub-l">Partly cloudy · Chicago</div>
+          <div class="pane" data-pane="cal">
+            <div class="cal">
+              <div class="cal-left">
+                <div class="cal-head"><span>November 2026</span><span class="cal-nav">‹ ›</span></div>
+                <div class="cal-grid">
+                  <i>S</i><i>M</i><i>T</i><i>W</i><i>T</i><i>F</i><i>S</i>
+                  <em>26</em><em>27</em><em>28</em><em>29</em><em>30</em><em>31</em><b>1</b>
+                  <b>2</b><b>3</b><b>4</b><b>5</b><b>6</b><b>7</b><b>8</b>
+                  <b>9</b><b>10</b><b>11</b><b>12</b><b>13</b><b>14</b><b>15</b>
+                  <b>16</b><b class="today">17</b><b>18</b><b>19</b><b>20</b><b>21</b><b>22</b>
+                  <b>23</b><b>24</b><b>25</b><b>26</b><b>27</b><b>28</b><b>29</b>
+                  <b>30</b><em>1</em><em>2</em><em>3</em><em>4</em><em>5</em><em>6</em>
+                </div>
+              </div>
+              <div class="cal-right">
+                <div class="cal-day">Tuesday, Nov 17</div>
+                <div class="ev"><span class="dot-g"></span><div class="ev-m"><div class="ev-t">9:00 a – 9:45 a</div><div class="ev-n">Team standup</div></div><span class="join"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 10.5V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5l6 4.5V6l-6 4.5Z"/></svg>Join</span></div>
+                <div class="ev"><span class="dot-g"></span><div class="ev-m"><div class="ev-t">11:00 a – 12:00 p</div><div class="ev-n">Portfolio review</div></div><span class="join"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 10.5V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5l6 4.5V6l-6 4.5Z"/></svg>Join</span></div>
+                <div class="ev"><span class="dot-g"></span><div class="ev-m"><div class="ev-t">2:00 p – 3:00 p</div><div class="ev-n">Client call — Acme Co</div></div><span class="join"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 10.5V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5l6 4.5V6l-6 4.5Z"/></svg>Join</span></div>
+              </div>
             </div>
           </div>
-          <div class="pane" data-pane="bat">
-            <div class="mid">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="3"/><path d="M22 11v2"/></svg>
-              <div class="wx-t">84%</div>
-              <div class="batbar"><i></i></div>
-              <div class="sub-l">AirPods Pro</div>
+          <div class="pane" data-pane="ai">
+            <div class="ai">
+              <div class="ai-head">
+                <img class="ai-logo" src="../assets/agent-claude.webp" alt="">
+                <span class="ai-title">AI Coding</span>
+                <span class="ai-live"><i></i>1 live</span>
+                <span class="ai-upd">updated 12m ago</span>
+              </div>
+              <div class="ai-sec">Recent</div>
+              <div class="ai-row">
+                <img class="ai-ic" src="../assets/agent-claude.webp" alt="">
+                <div class="ai-m"><div class="ai-n"><span class="nm">Developing landing page</span><span class="badge run"><i></i>Running</span><span class="badge mdl">sonnet-4.5</span></div></div>
+                <div class="ai-r"><div class="ai-time">2:14:32</div><div class="ai-tok">168.8k in · 45.7k out</div></div>
+              </div>
+              <div class="ai-row">
+                <img class="ai-ic" src="../assets/agent-codex.webp" alt="">
+                <div class="ai-m"><div class="ai-n"><span class="nm">Fixing auth bug</span><span class="badge done"><i></i>Done</span><span class="badge mdl">gpt-5.1-codex</span></div></div>
+                <div class="ai-r"><div class="ai-time">1h ago</div><div class="ai-tok">147.2k in · 75.4k out</div></div>
+              </div>
+              <div class="ai-row">
+                <img class="ai-ic" src="../assets/agent-opencode.svg" alt="" style="background:#fff;padding:2px">
+                <div class="ai-m"><div class="ai-n"><span class="nm">Refactor API client</span><span class="badge done"><i></i>Done</span><span class="badge mdl">qwen3-coder</span></div></div>
+                <div class="ai-r"><div class="ai-time">2h ago</div><div class="ai-tok">1.6M in · 211.2k out</div></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="dots" id="dots">
         <button class="dot act" data-pane="np" aria-label="Now Playing"></button>
-        <button class="dot" data-pane="vol" aria-label="Volume"></button>
-        <button class="dot" data-pane="wx" aria-label="Weather"></button>
-        <button class="dot" data-pane="bat" aria-label="Battery"></button>
+        <button class="dot" data-pane="shelf" aria-label="Shelf"></button>
+        <button class="dot" data-pane="cal" aria-label="Calendar"></button>
+        <button class="dot" data-pane="ai" aria-label="AI sessions"></button>
       </div>
       <div class="hint">hover the island</div>
     </div>
